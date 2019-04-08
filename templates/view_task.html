@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% load tz %}
+
+{% block style %}
+  <style>
+    .jumbotron {
+      text-align: center;
+    }
+    #home {
+      float: right;
+      height: 35px;
+      color: #fff;
+      background: #337ab7;
+      padding: 10px;
+      margin-top: -20px;
+    }
+    .divider{
+    width:5px;
+    height:auto;
+    display:inline-block;
+}
+  </style>
+{% endblock %}
+
+  {% block jumbotron %}
+
+  <a href="{% url 'get_tasks' %}" id="home" right>Home</a>
+<hr>
+
+          <div class="jumbotron">
+
+                <form class="form-horizontal"
+                      method="post"
+                      enctype="multipart/form-data"
+                      action="{% url 'modify_task' info.uuid %}">
+                      {% csrf_token %}
+
+                      <div class="form-group">
+                        <label for="title" class="col-sm-5 col-form-label">Title</label>
+                        <div class="col-sm-4">
+                          <input type="text" class="form-control"
+                                 id="title"
+                                 name="title"
+                                 value='{{ info.title }}'>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="content" class="col-sm-5 col-form-label">Content</label>
+                        <div class="col-sm-4">
+                          <textarea class="form-control"
+                                    input type="text" id="res_location"
+                                    name="content"
+                                    rows="3"> {{ info.content.strip }}</textarea>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="created_by" class="col-sm-5 col-form-label">Created By</label>
+                        <div class="col-sm-4">
+                          <input type="text" class="form-control"
+                            readonly class="form-control-plaintext"
+                                 id="created_by"
+                                 name="created_by"
+                                 value='{{ info.created_by }}'>
+                        </div>
+                      </div>
+                        <div class="form-group">
+                          <label for="priority" class="col-sm-5 col-form-label">Priority</label>
+                          <div class="col-sm-4">
+                            <select name="priority">
+                              <option value=1 {% if info.priority == 1 %}selected="selected"{% endif %}>
+                                High</option>
+                              <option value=2  {% if info.priority == 2 %}selected="selected"{% endif %}>
+                                Medium</option>
+                              <option value=3  {% if info.priority == 3 %}selected="selected"{% endif %}>
+                                Low</option>
+                            </select>
+                          </div>
+                        </div>
+                    <div class="form-group">
+                      <label for="state" class="col-sm-5 col-form-label">state</label>
+                      <div class="col-sm-4">
+                        {% if info.state == 2 or info.state == 3 %}
+                            <input type="text" class="form-control"
+                              readonly class="form-control-plaintext"
+                                   id="state"
+                                   name="state"
+                                   value='{{ info.get_state_display }}'>
+                        {% else %}
+                        <select name="state">
+                          <option value=1 {% if info.state == 1 %}selected="selected"{% endif %}>
+                            New</option>
+                          <option value=2 {% if info.state == 2 %}selected="selected"{% endif %}>
+                            Accepted</option>
+                          <option value=3 {% if info.state == 3 %}selected="selected"{% endif %}>
+                            Completed</option>
+                          <option value=4 {% if info.state == 4 %}selected="selected"{% endif %}>
+                            Declined</option>
+                          <option value=5 {% if info.state == 5 %}selected="selected"{% endif %}>
+                            Cancelled</option>
+                          <option value=6 {% if info.state == 6 %}selected="selected"{% endif %}>
+                            Closed</option>
+                        </select>
+                        {% endif %}
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+
+
+                      <div class="panel-group">
+
+
+                        <div class="panel panel-info">
+                          <div class="panel-heading">Various State</div>
+                          {% for info in task_act  %}
+                          <div class="panel-body">
+                            {{ info.get_state_display }} by
+                            {{ info.dvr_man.first_name }} on
+                            {{ info.created_at }}
+                          </div>
+                          {% endfor %}
+                        </div>
+
+                        </div>
+
+                    </div>
+                    <hr>
+                      <!-- <input type="hidden" name="_method" value="PUT"> -->
+
+                      <button type="submit" name="_method" value="PUT"
+                      class="btn btn-primary">Update</button>
+                      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                      <button type="submit" name="_method" value="DELETE"
+                      class="btn btn-primary">Delete</button>
+
+              </form>
+
+          </div>
+{% endblock %}

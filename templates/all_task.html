@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load tz %}
+
+{% block style %}
+<style media="screen">
+  td.action-checkbox {
+      width: 10px;
+  }
+  td{
+    width: 100px;
+    text-align: justify;
+  }
+  #raise-task {
+    float: right;
+    height: 35px;
+    color: #fff;
+    background: #337ab7;
+    padding: 10px;
+    margin-top: -20px;
+  }
+  span {
+  background-color: #d5f4e6;
+}
+</style>
+{% endblock %}
+
+  {% block content %}
+
+<div class="container">
+
+      <a href="{% url 'raise_task' %}" id="raise-task" right>Click here for New Task</a>
+<hr>
+
+{% for info in task_info %}
+<form class="form-horizontal"
+      method="post"
+      enctype="multipart/form-data"
+      action="{% url 'raise_task' %}">
+
+          {% csrf_token %}
+
+            <table class="table table-striped">
+                {% if forloop.counter == 1 %}
+              <thead>
+                <tr>
+                  <th>S. No</th>
+                  <th>Title</th>
+                  <th>Content</th>
+                  <th>Priority</th>
+                  <th>State</th>
+                  <th>Created_by</th>
+                  <th>Created on</th>
+                  <th>Modified on</th>
+                </tr>
+              </thead>
+                {% endif %}
+              <tbody>
+                <tr>
+                  <td style="width: 50px;"> {{ forloop.counter }}</td>
+                  <td> <a href="{% url 'update_task' info.uuid %}">
+                     {{ info.title }} </a>
+                   </td>
+                  <td style="width: 150px;"> <textarea name="" id="" cols="65" rows="3"
+                    readonly class="form-control-plaintext">{{ info.content.strip }}</textarea></td>
+                  <td>{{ info.get_priority_display }}</td>
+                  <td>{{ info.get_state_display }}</td>
+                  <td>{{ info.created_by }}</td>
+                  <td>{{ info.created_at }}</td>
+                  <td>{{ info.modified_at }}</td>
+
+                </tr>
+              </tbody>
+            </table>
+
+            <input type="hidden" name="task_uuid" value="{{ info.uuid }}">
+        </form>
+  {% endfor %}
+    </div>
+
+  {% endblock %}

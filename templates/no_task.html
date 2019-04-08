@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load tz %}
+
+{% block style %}
+  <style>
+    .jumbotron {
+      text-align: center;
+    }
+    #raise-ticket {
+      float: right;
+      height: 35px;
+      color: #fff;
+      background: #337ab7;
+      padding: 10px;
+      margin-top: -20px;
+    }
+    #my-task {
+      float: right;
+      height: 35px;
+      color: #fff;
+      background: #337ab7;
+      padding: 10px;
+      margin-top: -20px;
+    }
+    #home {
+      float: right;
+      height: 35px;
+      color: #fff;
+      background: #337ab7;
+      padding: 10px;
+      margin-top: -20px;
+    }
+    #space {
+      float: right;
+      height: 35px;
+      color: #fff;
+      background: #ffffff;
+      padding: 20px;
+      margin-top: -20px;
+    }
+      #previous-task {
+        float: right;
+        height: 35px;
+        color: #fff;
+        background: #337ab7;
+        padding: 10px;
+        margin-top: -20px;
+      }
+      span {
+      background-color: #d5f4e6;
+    }
+  </style>
+{% endblock %}
+
+  {% block jumbotron %}
+  <p></p>
+
+ {% if request.user.profile.user_type == 1 %}
+
+  <a href="{% url 'raise_task' %}" id="raise-task" right>Click here to raise a task</a>
+
+  {% endif %}
+
+   {% if request.user.profile.user_type == 2 %}
+
+     <a href="{% url 'get_cur_task' %}" id="home" right>Current Task</a>
+   <p id="space" right></p>
+
+     <a href="{% url 'previous_task' %}" id="previous-task" right>Previous Task</a>
+
+   <p id="space" right></p>
+     <a href="{% url 'cur_user_task' %}" id="my-task" right>My Tasks</a>
+ <hr>
+     {% endif %}
+<hr>
+
+<p>Oops!  No tasks are available</p>
+
+
+{% endblock %}

@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load tz %}
+
+{% block style %}
+  <style>
+    .jumbotron {
+      text-align: center;
+    }
+    #home {
+      float: right;
+      height: 35px;
+      color: #fff;
+      background: #337ab7;
+      padding: 10px;
+      margin-top: -20px;
+    }
+    .divider{
+    width:5px;
+    height:auto;
+    display:inline-block;
+}
+  </style>
+{% endblock %}
+
+  {% block jumbotron %}
+
+  <a href="{% url 'get_cur_task' %}" id="home" right>Home</a>
+<hr>
+
+          <div class="jumbotron">
+
+                <form class="form-horizontal"
+                      method="post"
+                      enctype="multipart/form-data"
+                      action="{% url 'edit_task' info.uuid %}">
+                      {% csrf_token %}
+
+                      <div class="form-group">
+                        <label for="title" class="col-sm-5 col-form-label">Title</label>
+                        <div class="col-sm-4">
+                          <input type="text" class="form-control"
+                                 id="title"
+                                 name="title"
+                                 readonly class="form-control-plaintext"
+                                 value='{{ info.title }}'>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="content" class="col-sm-5 col-form-label">Content</label>
+                        <div class="col-sm-4">
+                          <textarea class="form-control"
+                                    input type="text" id="content"
+                                    name="content"
+                                    readonly class="form-control-plaintext"
+                                    rows="3"> {{ info.content.strip }}</textarea>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="created_by" class="col-sm-5 col-form-label">Created By</label>
+                        <div class="col-sm-4">
+                          <input type="text" class="form-control"
+                            readonly class="form-control-plaintext"
+                                 id="created_by"
+                                 name="created_by"
+                                 value='{{ info.created_by }}'>
+                        </div>
+                      </div>
+                        <div class="form-group">
+                          <label for="priority" class="col-sm-5 col-form-label">Priority</label>
+                          <div class="col-sm-4">
+                            <input type="text" class="form-control"
+                              readonly class="form-control-plaintext"
+                                   id="priority"
+                                   name="priority"
+                                   value='{{ info.get_priority_display }}'>
+                          </div>
+                        </div>
+                    <div class="form-group">
+                      <label for="state" class="col-sm-5 col-form-label">State</label>
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control"
+                          readonly class="form-control-plaintext"
+                               id="state"
+                               name="state"
+                               value='{{ info.get_state_display }}'>
+                      </div>
+                    </div>
+
+                    <hr>
+                      <!-- <input type="hidden" name="_method" value="PUT"> -->
+
+                      <button type="submit" name="_method" value="ACCEPT"
+                      class="btn btn-primary">Accept</button>
+                      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                      <button type="submit" name="_method" value="REJECT"
+                      class="btn btn-primary">Decline</button>
+
+              </form>
+
+          </div>
+{% endblock %}

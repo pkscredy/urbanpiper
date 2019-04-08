@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load tz %}
+
+{% block style %}
+<style media="screen">
+  td.action-checkbox {
+      width: 10px;
+  }
+  td{
+    width: 100px;
+    text-align: justify;
+  }
+  #previous-task {
+    float: right;
+    height: 35px;
+    color: #fff;
+    background: #337ab7;
+    padding: 10px;
+    margin-top: -20px;
+  }
+  #my-task {
+    float: right;
+    height: 35px;
+    color: #fff;
+    background: #337ab7;
+    padding: 10px;
+    margin-top: -20px;
+  }
+  #home {
+  float: right;
+  height: 35px;
+  color: #fff;
+  background: #337ab7;
+  padding: 10px;
+  margin-top: -20px;
+}  
+  #space {
+    float: right;
+    height: 35px;
+    color: #fff;
+    background: #ffffff;
+    padding: 20px;
+    margin-top: -20px;
+  }
+  span {
+  background-color: #d5f4e6;
+}
+</style>
+{% endblock %}
+
+  {% block content %}
+
+<div class="container">
+
+  <a href="{% url 'get_cur_task' %}" id="home" right>Current Task</a>
+<p id="space" right></p>
+
+  <a href="{% url 'previous_task' %}" id="previous-task" right>Previous Task</a>
+
+<p id="space" right></p>
+  <a href="{% url 'cur_user_task' %}" id="my-task" right>My Tasks</a>
+<hr>
+
+{% for info in task_info %}
+<form class="form-horizontal"
+      method="post"
+      enctype="multipart/form-data"
+      action="#">
+
+          {% csrf_token %}
+
+            <table class="table table-striped">
+              {% if forloop.counter == 1 %}
+              <thead>
+                <tr>
+                  <th>S.No</th>
+                  <th>Title</th>
+                  <th>Content</th>
+                  <th>Priority</th>
+                  <th>State</th>
+                  <th>Accepted By</th>
+                  <th>Created By</th>
+                </tr>
+              </thead>
+            {% endif %}
+              <tbody>
+                <tr>
+                  <td style="width: 50px;"> {{ forloop.counter }}</td>
+                  <td>
+                     {{ info.task.title }}
+                   </td>
+                  <td style="width: 150px;"> <textarea name="" id="" cols="65" rows="3"
+                    readonly class="form-control-plaintext">{{ info.task.content.strip }}</textarea></td>
+                  <td>{{ info.task.get_priority_display }}</td>
+                  <td>{{ info.get_state_display }}</td>
+                  <td>{{ info.dvr_man.first_name }}</td>
+                  <td>{{ info.task.created_by }}</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <input type="hidden" name="task_uuid" value="{{ info.uuid }}">
+        </form>
+  {% endfor %}
+    </div>
+
+  {% endblock %}
