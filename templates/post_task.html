@@ -24,7 +24,9 @@
 
           <div class="jumbotron">
 
-                <form class="form-horizontal"
+                <form
+                      id="form"
+                      class="form-horizontal"
                       method="post"
                       enctype="multipart/form-data"
                       action="{% url 'raise_task' %}">
@@ -43,7 +45,7 @@
                         <label for="content" class="col-sm-5 col-form-label">Content</label>
                         <div class="col-sm-4">
                           <textarea class="form-control"
-                                    input type="text" id="res_location"
+                                    input type="text" id="content"
                                     name="content"
                                     rows="3"> {{ info.content }}</textarea>
                         </div>
@@ -52,7 +54,7 @@
                         <div class="form-group">
                           <label for="priority" class="col-sm-5 col-form-label">Priority</label>
                           <div class="col-sm-4">
-                            <select name="priority">
+                            <select name="priority" id="priority">
                               <option value=1>High</option>
                               <option value=2>Medium</option>
                               <option value=3>Low</option>
@@ -66,4 +68,54 @@
               </form>
 
           </div>
+{% endblock %}
+
+{% block script %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reconnecting-websocket/1.0.0/reconnecting-websocket.js">
+</script>
+<script>
+var loc = window.location
+var formData = $("form")
+var titleInput = $("#title")
+var contentInput = $("#content")
+var priorityInput = $("#priority")
+
+
+var wsStart = 'ws://'
+if (loc.protocol == 'https:'){
+  wsStart = 'wss://'
+}
+
+var endpoint = wsStart + loc.host + loc.pathname
+// var socket = new WebSocket(endpoint)
+var socket = new ReconnectingWebSocket(endpoint)
+socket.onmessage = function(e){
+  console.log("message", e)
+      console.log(JSON.parse(e.data))
+}
+socket.onopen = function(e){
+  console.log("open", e)
+  formData.submit(function(event){
+      event.preventDefault()
+      var titleInput = $("#title").val()
+      var contentInput = $("#content").val()
+      var priorityInput = $("#priority").val()
+      var finalData = {
+          'title': titleInput,
+          'content': contentInput,
+          'priority': priorityInput
+      }
+      // sending data to backend from UI
+      socket.send(JSON.stringify(finalData))
+      console.log(finalData);
+      formData[0].reset()
+  })
+}
+socket.onerror = function(e){
+  console.log("error", e)
+}
+socket.onclose = function(e){
+  console.log("close", e)
+}
+</script>
 {% endblock %}

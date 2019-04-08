@@ -25,7 +25,7 @@
   background: #337ab7;
   padding: 10px;
   margin-top: -20px;
-}  
+}
 #space {
   float: right;
   height: 35px;
@@ -102,4 +102,36 @@
 
     </div>
 
+  {% endblock %}
+
+
+  {% block script %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reconnecting-websocket/1.0.0/reconnecting-websocket.js">
+  </script>
+
+  <script>
+    console.log('prashant')
+    var loc = window.location;
+    var wsStart = 'ws://'
+    if (loc.protocol == 'https:'){
+      wsStart = 'wss://'
+    }
+    var endpoint = wsStart + loc.host + loc.pathname
+
+    var socket = new WebSocket(endpoint)
+
+    socket.onmessage = function(e){
+      console.log("message", e.data)
+          console.log(JSON.parse(e.data))
+    }
+    socket.onopen = function(e){
+      console.log("open", e)
+    }
+    socket.onerror = function(e){
+      console.log("error", e)
+    }
+    socket.onclose = function(e){
+      console.log("close", e)
+    }
+    </script>
   {% endblock %}
