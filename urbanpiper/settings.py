@@ -25,7 +25,7 @@ SECRET_KEY = '-!ql^u#qik=bssz==^!tb^p3nn52(49n2ls1n9%e5@_4j%hxuj'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['13.127.255.249', '*']
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
@@ -126,5 +126,7 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
 LOGIN_REDIRECT_URL = 'cur_user_task'
