@@ -36,10 +36,3 @@ class SuppressedAPIException(CustomAPIException):
     """
     default_detail = 'An user error occurred.'
     default_code = 'user_error'
-
-# class ChoicesError(SuppressedAPIException):
-#     """
-#     Exception raised while parsing choices.
-#     """
-#     default_detail = 'Invalid Choice.'
-#     default_code = 'choice_error'

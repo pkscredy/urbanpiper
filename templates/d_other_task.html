@@ -33,7 +33,7 @@
   background: #337ab7;
   padding: 10px;
   margin-top: -20px;
-}  
+}
   #space {
     float: right;
     height: 35px;
@@ -52,6 +52,11 @@
 
 <div class="container">
 
+    <div class="panel-group">
+      <div class="panel panel-default">
+        <div class="panel-body">Previously Accepted Task By Current Logged-in</div>
+      </div>
+
   <a href="{% url 'get_cur_task' %}" id="home" right>Current Task</a>
 <p id="space" right></p>
 
@@ -59,7 +64,7 @@
 
 <p id="space" right></p>
   <a href="{% url 'cur_user_task' %}" id="my-task" right>My Tasks</a>
-<hr>
+
 
 {% for info in task_info %}
 <form class="form-horizontal"

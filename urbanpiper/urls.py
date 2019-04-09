@@ -15,25 +15,19 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from delivery.views import (
-                    TaskActivityView,
-                    TaskHtmlView,
-                    ModifyTaskView,
-                    DvrCurrentTaskView,
-                    ModCurrentTaskView,
-                    PreviousTaskView,
-                    CurUserTaskView,
-                    UpdateTaskView
-                )
+from django.contrib.auth import views as auth_views
+
+from delivery.views import (CurUserTaskView, DvrCurrentTaskView,
+                            ModCurrentTaskView, ModifyTaskView,
+                            PreviousTaskView, TaskActivityView, TaskHtmlView,
+                            UpdateTaskView)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^raise_task/$', TaskHtmlView.as_view(), name='raise_task'),
     url(r'^get_tasks/$', TaskActivityView.as_view(), name='get_tasks'),
-    # url(r'^ticket_with/$', RetreiveTicketView.as_view(), name='ticket_with'),
     url(r'^modify_task/(?P<task_uuid>[0-9a-z-]+)/$',
         ModifyTaskView.as_view(), name='modify_task'),
-    # url(r'^delete_ticket/$', ModifyTicketView.as_view(), name='delete_ticket'),
     url(r'^update_task/(?P<task_uuid>[0-9a-z-]+)/$',
         ModifyTaskView.as_view(), name='update_task'),
     url(r'^get_cur_task/$', DvrCurrentTaskView.as_view(), name='get_cur_task'),
@@ -45,6 +39,8 @@ urlpatterns = [
     url(r'^cur_user_task/$', CurUserTaskView.as_view(), name='cur_user_task'),
     url(r'^update_dvr_task/(?P<task_act_uuid>[0-9a-z-]+)/$',
         UpdateTaskView.as_view(), name='update_dvr_task'),
-    # url(r'^state_change/(?P<task_uuid>[0-9a-z-]+)/$',
-    #     CurUserTaskView.as_view(), name='state_change'),
+    url(r'^login/$', auth_views.login, {'template_name': 'login.html'},
+        name='login'),
+    url(r'^logout/$', auth_views.logout, {'template_name': 'logged_out.html'},
+        name='logout'),
 ]

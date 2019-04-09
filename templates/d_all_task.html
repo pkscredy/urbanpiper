@@ -25,7 +25,7 @@
   background: #337ab7;
   padding: 10px;
   margin-top: -20px;
-}  
+}
 #space {
   float: right;
   height: 35px;
@@ -51,6 +51,11 @@
   {% block content %}
 
 <div class="container">
+  <div class="panel-group">
+    <div class="panel panel-default">
+      <div class="panel-body">Current Task Queue</div>
+    </div>
+
   <a href="{% url 'get_cur_task' %}" id="home" right>Current Task</a>
  <p id="space" right></p>
 
@@ -58,7 +63,7 @@
 
  <p id="space" right></p>
    <a href="{% url 'cur_user_task' %}" id="my-task" right>My Tasks</a>
-<hr>
+
 
 
 <form class="form-horizontal"

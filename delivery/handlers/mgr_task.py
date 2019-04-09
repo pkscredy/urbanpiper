@@ -1,4 +1,4 @@
-from delivery.dbapi import TaskDbio, TaskActivityDbio
+from delivery.dbapi import TaskActivityDbio, TaskDbio
 from delivery.models import Task
 
 

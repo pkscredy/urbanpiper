@@ -1,12 +1,8 @@
 from django.db import models
 
 from base.models import AbstractAuditModel
-from delivery.choices import (
-            PriorityStatus,
-            StatesStatus,
-            PRIORITY_CHOICES,
-            STATE_STATUS_CHOICES
-        )
+from delivery.choices import (PRIORITY_CHOICES, STATE_STATUS_CHOICES,
+                              PriorityStatus, StatesStatus)
 from usermodule.models import Profile
 
 

@@ -24,6 +24,14 @@ class TaskDbio(AbstractBaseDbIO):
             obj, {'state': state}
         )
 
+    def filter_by_priority(self, priority, state):
+        return TaskDbio().filter_objects(
+            {
+                'priority': priority,
+                'state': state
+            }
+        ).last()
+
 
 class TaskActivityDbio(AbstractBaseDbIO):
 

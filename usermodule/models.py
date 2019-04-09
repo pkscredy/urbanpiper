@@ -1,14 +1,9 @@
 from django.contrib.auth.models import User
-
 from django.db import models
 
 from base.models import AbstractAuditModel
-from usermodule.choices import (
-                Gender,
-                GENDER_CHOICES,
-                UserType,
-                USERTYPE_CHOICES
-            )
+from usermodule.choices import (GENDER_CHOICES, USERTYPE_CHOICES, Gender,
+                                UserType)
 
 
 class Profile(AbstractAuditModel):

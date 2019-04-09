@@ -1,42 +1,28 @@
-from delivery.dbapi import TaskDbio, TaskActivityDbio
 from delivery.choices import PriorityStatus, StatesStatus
+from delivery.constants import MAX_LIMIT
+from delivery.dbapi import TaskActivityDbio, TaskDbio
 from usermodule.choices import UserType
 
 
 class DeliveryPerson:
     def get_by_priority(self):
-        # import ipdb; ipdb.set_trace()
-        objs = TaskDbio().filter_objects(
-            {
-                'priority': PriorityStatus.HIGH,
-                'state': StatesStatus.NEW
-            }
-        )
-        if objs:
-            return objs.last()
-        objs = TaskDbio().filter_objects(
-            {
-                'priority': PriorityStatus.MEDIUM,
-                'state': StatesStatus.NEW
-            }
-        )
-        if objs:
-            return objs.last()
-        objs = TaskDbio().filter_objects(
-            {
-                'priority': PriorityStatus.LOW,
-                'state': StatesStatus.NEW
-            }
-        )
-        if objs:
-            return objs.last()
+        state = StatesStatus.NEW
+        high_obj = TaskDbio().filter_by_priority(PriorityStatus.HIGH, state)
+        if high_obj:
+            return high_obj
+        med_obj = TaskDbio().filter_by_priority(PriorityStatus.MEDIUM, state)
+        if med_obj:
+            return med_obj
+        low_obj = TaskDbio().filter_by_priority(PriorityStatus.LOW, state)
+        if low_obj:
+            return low_obj
         return {
             'message': 'No Task are available'
         }
 
     def handle_task(self, request, task_uuid, accept):
         if request.user.profile.dvr_man.filter(
-                state=StatesStatus.ACCEPTED).count() == 3:
+                state=StatesStatus.ACCEPTED).count() == MAX_LIMIT:
             return {
                 'message': 'You accept limit of task is over'
             }

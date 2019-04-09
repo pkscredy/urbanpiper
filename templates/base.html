@@ -23,7 +23,8 @@
   <div class="panel panel-success">
     <div class="panel-heading">
       <b>UserName:</b> {{ request.user.profile.first_name }} &nbsp;&nbsp;&nbsp;
-       <b>UserType:</b> {{ request.user.profile.get_user_type_display }}
+       <b>UserType:</b> {{ request.user.profile.get_user_type_display }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       <a href="{% url 'logout' %}"> LogOut </a>
     </div>
   </div>
 
