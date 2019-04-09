@@ -9,3 +9,4 @@ class ProfileAdmin(admin.ModelAdmin):
                     'user_type', 'mobile_number',)
 
     search_fields = ('uuid', 'first_name', 'mobile_number')
+    readonly_fields = ['created_by', 'modified_by']

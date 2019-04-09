@@ -6,7 +6,7 @@
     .jumbotron {
       text-align: center;
     }
-    #raise-ticket {
+    #raise-task {
       float: right;
       height: 35px;
       color: #fff;
@@ -57,7 +57,7 @@
 
  {% if request.user.profile.user_type == 1 %}
 
-  <a href="{% url 'raise_task' %}" id="raise-task" right>Click here to raise a task</a>
+  <a href="{% url 'raise_task' %}" id="raise-task" right>Click here to create a task</a>
 
   {% endif %}
 
