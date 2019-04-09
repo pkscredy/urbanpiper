@@ -13,7 +13,7 @@ class ManagerTask:
         return TaskDbio().create_obj(task_data)
 
     def get_all_tasks(self):
-        objs = Task.objects.all()
+        objs = Task.objects.all().order_by('state')
         if not objs:
             return {
                 'message': 'No Task are available'

@@ -61,6 +61,13 @@
 
   {% endif %}
 
+
+
+      <div class="panel-group">
+        <div class="panel panel-default">
+          <div class="panel-body">Current Task Queue</div>
+        </div>
+
    {% if request.user.profile.user_type == 2 %}
 
      <a href="{% url 'get_cur_task' %}" id="home" right>Current Task</a>
@@ -70,11 +77,11 @@
 
    <p id="space" right></p>
      <a href="{% url 'cur_user_task' %}" id="my-task" right>My Tasks</a>
- <hr>
+ <br><br>
      {% endif %}
-<hr>
 
-<p>Oops!  No tasks are available</p>
+
+<p>Oops!  No tasks are available in the queue</p>
 
 
 {% endblock %}
