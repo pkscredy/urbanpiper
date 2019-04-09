@@ -59,7 +59,7 @@ class DeliveryPerson:
             {
                 'dvr_man': request.user.profile
             }
-        )
+        ).order_by('state')
 
     def update_task(self, request, task_act_uuid, data):
         obj = TaskActivityDbio().get_taskactivity(task_act_uuid)
